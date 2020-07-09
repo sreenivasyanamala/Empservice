@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">emp-managment</a> &gt; <a href="index.source.html" class="el_package">com.mt.emp.controller</a> &gt; <span class="el_source">EmployeeController.java</span></div><h1>EmployeeController.java</h1><pre class="source lang-java linenums">package com.mt.emp.controller;
+
+import java.util.Collection;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import com.mt.emp.exception.EmployeeNotFoundException;
+import com.mt.emp.model.EmployeeModel;
+import com.mt.emp.service.EmployeeService;
+
+@Path(&quot;/employee&quot;)
+<span class="fc" id="L20">public class EmployeeController {</span>
+
+<span class="fc" id="L22">	private static EmployeeService empService = new EmployeeService();</span>
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllEmployee() {
+<span class="fc" id="L27">		Collection&lt;EmployeeModel&gt; emp = null;</span>
+		try {
+<span class="fc" id="L29">			emp = empService.getEmpDetails();</span>
+<span class="nc" id="L30">		} catch (EmployeeNotFoundException e) {</span>
+<span class="nc" id="L31">			return Response.status(Response.Status.NOT_FOUND).entity(e).build();</span>
+<span class="fc" id="L32">		}</span>
+<span class="fc" id="L33">		return Response.status(Response.Status.OK).entity(emp).build();</span>
+	}
+
+	@GET
+	@Path(&quot;/getById/{id}&quot;)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEmployeeById(@PathParam(&quot;id&quot;) String id) {
+
+<span class="fc" id="L41">		System.out.println(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot; + id);</span>
+		EmployeeModel employee;
+
+		try {
+<span class="fc" id="L45">			employee = empService.getEmpById(id);</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">			if (id == null) {</span>
+<span class="nc" id="L47">				return Response.status(Response.Status.BAD_REQUEST).entity(id).build();</span>
+			}
+<span class="fc" id="L49">		} catch (EmployeeNotFoundException e) {</span>
+<span class="fc" id="L50">			return Response.status(Response.Status.NOT_FOUND).entity(e).build();</span>
+<span class="fc" id="L51">		}</span>
+<span class="fc" id="L52">		return Response.status(Response.Status.OK).entity(employee).build();</span>
+	}
+
+	@DELETE
+	@Path(&quot;/deleteById/{id}&quot;)
+	public Response deleteEmpById(@PathParam(&quot;id&quot;) String id) {
+		try {
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (id == null) {</span>
+<span class="nc" id="L60">				return Response.status(Response.Status.BAD_REQUEST).entity(id).build();</span>
+			}
+<span class="fc" id="L62">			empService.delEmpById(id);</span>
+<span class="fc" id="L63">		} catch (EmployeeNotFoundException e) {</span>
+<span class="fc" id="L64">			return Response.status(Response.Status.NOT_FOUND).entity(e).build();</span>
+<span class="fc" id="L65">		}</span>
+<span class="fc" id="L66">		return Response.status(Status.OK).entity(&quot;successfully Deleted !!&quot;).build();</span>
+	}
+
+	@POST
+	@Path(&quot;/insert&quot;)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response InsertEmp(EmployeeModel emp) {
+		try {
+<span class="fc" id="L74">			empService.InsertEmp(emp);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (emp == null) {</span>
+<span class="nc" id="L76">				return Response.status(Response.Status.BAD_REQUEST).entity(emp).build();</span>
+			}
+<span class="fc" id="L78">		} catch (Exception e) {</span>
+<span class="fc" id="L79">			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();</span>
+<span class="fc" id="L80">		}</span>
+<span class="fc" id="L81">		return Response.status(Status.CREATED).entity(&quot;successfully Inserted !!&quot;).build();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

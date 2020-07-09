@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">emp-managment</a> &gt; <a href="index.source.html" class="el_package">com.mt.emp.dao</a> &gt; <span class="el_source">EmployeeDAO.java</span></div><h1>EmployeeDAO.java</h1><pre class="source lang-java linenums">package com.mt.emp.dao;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.mt.emp.exception.EmployeeNotFoundException;
+import com.mt.emp.model.EmployeeModel;
+
+public class EmployeeDAO {
+
+	private static Map&lt;String, EmployeeModel&gt; empDetailsMap;
+
+<span class="fc" id="L14">	public EmployeeDAO() {</span>
+		// TODO Auto-generated constructor stub
+<span class="fc" id="L16">		empDetailsMap = new HashMap&lt;String, EmployeeModel&gt;();</span>
+<span class="fc" id="L17">		EmployeeModel emp1 = new EmployeeModel();</span>
+<span class="fc" id="L18">		emp1.setEmpId(&quot;11111&quot;);</span>
+<span class="fc" id="L19">		emp1.setEmpDesignation(&quot;Manager&quot;);</span>
+<span class="fc" id="L20">		emp1.setEmpExperience(&quot;5&quot;);</span>
+<span class="fc" id="L21">		emp1.setEmpName(&quot;Sreenivas&quot;);</span>
+<span class="fc" id="L22">		emp1.setEmpSalary(&quot;70,000&quot;);</span>
+<span class="fc" id="L23">		EmployeeModel emp2 = new EmployeeModel();</span>
+<span class="fc" id="L24">		emp2.setEmpId(&quot;22222&quot;);</span>
+<span class="fc" id="L25">		emp2.setEmpDesignation(&quot;Asst.Manager&quot;);</span>
+<span class="fc" id="L26">		emp2.setEmpExperience(&quot;4&quot;);</span>
+<span class="fc" id="L27">		emp2.setEmpName(&quot;Dileep kumar&quot;);</span>
+<span class="fc" id="L28">		emp2.setEmpSalary(&quot;40,000&quot;);</span>
+
+<span class="fc" id="L30">		empDetailsMap.put(emp1.getEmpId(), emp1);</span>
+<span class="fc" id="L31">		empDetailsMap.put(emp2.getEmpId(), emp2);</span>
+
+<span class="fc" id="L33">	}</span>
+
+	public Collection&lt;EmployeeModel&gt; getEmpDetails() throws EmployeeNotFoundException {
+<span class="fc" id="L36">		System.out.println(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot; + empDetailsMap);</span>
+<span class="fc" id="L37">		Collection&lt;EmployeeModel&gt; employees = empDetailsMap.values();</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">		if (employees.isEmpty()) {</span>
+<span class="nc" id="L39">			throw new EmployeeNotFoundException(&quot;Employees does not exist&quot;);</span>
+		}
+<span class="fc" id="L41">		return employees;</span>
+	}
+
+	public EmployeeModel getEmpById(String Id) throws EmployeeNotFoundException {
+<span class="fc" id="L45">		EmployeeModel employee = empDetailsMap.get(Id);</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		if (employee == null) {</span>
+<span class="fc" id="L47">			throw new EmployeeNotFoundException(&quot;Employees does not exist&quot;);</span>
+		}
+<span class="fc" id="L49">		return employee;</span>
+	}
+
+	public void delEmpById(String Id) throws EmployeeNotFoundException {
+<span class="fc" id="L53">		EmployeeModel employee = empDetailsMap.remove(Id);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		if (employee == null) {</span>
+<span class="fc" id="L55">			throw new EmployeeNotFoundException(&quot;Employees does not exist&quot;);</span>
+		}
+<span class="fc" id="L57">		System.out.println(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot; + empDetailsMap);</span>
+<span class="fc" id="L58">	}</span>
+
+	public void InsertEmp(EmployeeModel emp) {
+<span class="fc" id="L61">		empDetailsMap.put(emp.getEmpId(), emp);</span>
+<span class="fc" id="L62">		System.out.println(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot; + empDetailsMap);</span>
+<span class="fc" id="L63">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
